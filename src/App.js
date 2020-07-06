@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-// Компоненты:
+
 import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import Filter from "./components/Filter";
 
 import { saveToLS, getFromLS } from "./utils/localStorage";
-// ID Generetor:
+
 import { v4 as uuidv4 } from "uuid";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -26,13 +26,13 @@ class App extends Component {
     const { contacts } = this.state;
     const findName = contacts.find((cnt) => cnt.name === name);
     const findNumber = contacts.find((cnt) => cnt.number === number);
-    // Проверка на заполненость всех полей формы:
+ 
     if (!name || !number) {
       toast.warn("Please,  fill in all fields", {
         position: "top-right",
         autoClose: 5000,
       });
-      // Пpоверка на наличие добавляемого контакта в существующем списке:
+      
     } else if (findName || findNumber) {
       toast.info(
         `Contact with name ${name} or phone number ${number} is already on your list`,
@@ -41,7 +41,7 @@ class App extends Component {
           autoClose: 5000,
         }
       );
-      // Добавление контакта в список:
+      
     } else {
       this.setState(({ contacts }) => ({
         contacts: [contact, ...contacts],
@@ -69,13 +69,13 @@ class App extends Component {
     );
   };
 
-  //Запись в хранилище
+ 
   componentDidUpdate(prevState) {
     if (this.state.contacts !== prevState.contacts) {
       saveToLS("contacts", this.state.contacts);
     }
   }
-  // Рендер из хранилища
+
   componentDidMount() {
     if (getFromLS("contacts")) {
       this.setState({ contacts: getFromLS("contacts") });
